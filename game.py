@@ -12,7 +12,6 @@ def welcome():
     where only madness awaits...
     """
     )
-    print("")
 
 
 def play_game():
@@ -26,7 +25,7 @@ def explore_catacombs():
         player_input = input("-> ").lower()
 
         if player_input == "help":
-            print("TODO: add help function")
+            show_help()
         elif player_input == "quit":
             print(
                 "Overcome with terror, you flee the catacombs, and are forever branded a coward."
@@ -34,7 +33,7 @@ def explore_catacombs():
             # TODO: Print out final score
             play_again()
         else:
-            print("I don't understand you... type 'help' for help.")
+            print("Have you been stricken by madness!? Do you need 'help'?")
             continue
 
 
@@ -45,3 +44,22 @@ def play_again():
     else:
         print("Until next time adventurer.")
         exit(0)
+
+
+def show_help():
+    print(
+        """Enter a command: 
+    - n/s/e/w: move in a direction
+    - map - show a map of the labyrinth
+    - look - look around and describe your environment
+    - equip <item> - use an item from your inventory
+    - unequip <item> - stop using an item from your inventory
+    - fight - attack a foe
+    - examine <object> - examine an object more closely
+    - get <item> - pick up an item
+    - drop <item> - drop an item
+    - rest - restore some health by resting
+    - inventory - show your inventory
+    - status - show current player status
+    - quit - end the game"""
+    )
