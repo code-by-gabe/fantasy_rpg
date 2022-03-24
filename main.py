@@ -2,7 +2,6 @@ import game
 
 
 def main():
-    """Entry point to the app."""
     game.play_game()
 
 
