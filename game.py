@@ -1,3 +1,9 @@
+def play_game():
+    welcome()
+    input("Press ENTER to continue")
+    explore_catacombs()
+
+
 def welcome():
     print("")
     print(
@@ -12,12 +18,6 @@ def welcome():
     where only madness awaits...
     """
     )
-
-
-def play_game():
-    welcome()
-    input("Press ENTER to continue")
-    explore_catacombs()
 
 
 def explore_catacombs():
@@ -37,15 +37,6 @@ def explore_catacombs():
             continue
 
 
-def play_again():
-    descision = input("Play again? (yes/no) -> ").lower()
-    if descision == "yes":
-        play_game()
-    else:
-        print("Until next time adventurer.")
-        exit(0)
-
-
 def show_help():
     print(
         """Enter a command: 
@@ -63,3 +54,12 @@ def show_help():
     - status - show current player status
     - quit - end the game"""
     )
+
+
+def play_again():
+    descision = input("Play again? (yes/no) -> ").lower()
+    if descision == "yes":
+        play_game()
+    else:
+        print("Until next time adventurer.")
+        exit(0)
