@@ -1,23 +1,24 @@
 from colorama import Fore
+from blessed import Terminal
 
 
 def play_game() -> None:
+    terminal = Terminal()
+    print(terminal.clear())
     welcome()
     input(f"{Fore.WHITE}Press ENTER to continue{Fore.RESET}")
     explore_catacombs()
 
 
 def welcome() -> None:
-    print(
-        f"{Fore.RED}                                                   CATACOMBS OF THE OLD ONES{Fore.RESET}"
-    )
+    print(f"{Fore.RED}\t\t\t\t\t\tCATACOMBS OF THE OLD ONES{Fore.RESET}")
     print(
         f"""{Fore.WHITE}
     The village of Innsburg has been terrorised by strange, other-worldly creatures for months now. Unable to endure 
     any longer, the villagers pooled their wealth and hired the most skilled adventurer they could find: you. After
     listening to their tale of woe, you agree to enter the catacombs where most of the creatures seem to originate,
-    and destroy the foul beasts. Armed with a pistol, a knife, and a bundle of flares, you descend into the catacombs, 
-    where only madness awaits...{Fore.RESET}
+    and destroy the foul beasts. Armed with a pistol, your journal from the Miskatonic university, and a few flares, 
+    you descend into the catacombs, where only madness awaits...{Fore.RESET}
 
     """
     )
@@ -27,8 +28,8 @@ def explore_catacombs() -> None:
     while True:
         player_input = input(f"{Fore.MAGENTA}-> {Fore.RESET}").lower()
 
-        if player_input == "help":
-            show_help()
+        if player_input == "journal":
+            show_journal()
         elif player_input == "quit":
             print(
                 f"{Fore.WHITE}Overcome with terror, you flee the catacombs, and are forever branded a coward.{Fore.RESET}"
@@ -37,12 +38,12 @@ def explore_catacombs() -> None:
             play_again()
         else:
             print(
-                f"{Fore.WHITE}Have you been stricken by madness!? Do you need 'help'?{Fore.RESET}"
+                f"{Fore.WHITE}Have you been stricken by madness!? If you need help, type 'journal'.{Fore.RESET}"
             )
             continue
 
 
-def show_help() -> None:
+def show_journal() -> None:
     print(
         f"""{Fore.WHITE}Enter a command: 
     - n/s/e/w: move in a direction
