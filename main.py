@@ -1,7 +1,12 @@
 import game
 
+from blessed import Terminal
 
-def main():
+
+def main() -> None:
+    terminal = Terminal()
+    print(terminal.clear())
+
     game.play_game()
 
 
