@@ -1,13 +1,28 @@
-from colorama import Fore
+from colorama import Fore, init
 from blessed import Terminal
+from _classes.player import Player
+from _classes.room import Room
+from _classes.catacomb import Catacomb
 
 
 def play_game() -> None:
     terminal = Terminal()
     print(terminal.clear())
+
+    # init() makes sure colorama works on various platforms.
+    init()
+
+    adventurer = Player()
+    current_catacomb = Catacomb(adventurer)
+
+    room = Room()
+
+    current_catacomb.set_current_room(room)
+
     welcome()
+
     input(f"{Fore.WHITE}Press ENTER to continue{Fore.RESET}")
-    explore_catacombs()
+    explore_catacombs(current_catacomb)
 
 
 def welcome() -> None:
@@ -24,8 +39,10 @@ def welcome() -> None:
     )
 
 
-def explore_catacombs() -> None:
+def explore_catacombs(current_catacomb: Catacomb) -> None:
     while True:
+        current_catacomb.get_current_room().print_description()
+
         player_input = input(f"{Fore.MAGENTA}-> {Fore.RESET}").lower()
 
         if player_input == "journal":
@@ -74,7 +91,7 @@ def play_again() -> None:
 def get_yes_no(question: str) -> str:
     while True:
         answer = (
-            input(f"{question}{Fore.WHITE}(yes/no) {Fore.MAGENTA}-> {Fore.RESET}")
+            input(f"{question}{Fore.WHITE} (yes/no) {Fore.MAGENTA}-> {Fore.RESET}")
             .lower()
             .strip()
         )
@@ -85,5 +102,4 @@ def get_yes_no(question: str) -> str:
                 answer = "yes"
             elif answer == "n":
                 answer = "no"
-
             return answer
