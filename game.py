@@ -13,10 +13,9 @@ def play_game() -> None:
     init()
 
     adventurer = Player()
-    current_catacomb = Catacomb(adventurer)
-
     room = Room()
 
+    current_catacomb = Catacomb(adventurer)
     current_catacomb.set_current_room(room)
 
     welcome()
