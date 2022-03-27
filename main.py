@@ -1,6 +1,6 @@
 import game
 
-from blessed import Terminal
+from blessings import Terminal
 
 
 def main() -> None:

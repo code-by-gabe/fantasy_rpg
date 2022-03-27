@@ -1,7 +1,8 @@
+from os import curdir
 import random
 
 from colorama import Fore, init
-from blessed import Terminal
+from blessings import Terminal
 
 from _classes.player import Player
 from _classes.room import Room
@@ -9,6 +10,8 @@ from _classes.catacomb import Catacomb
 
 from _text_files.armory import equipment
 from _text_files.bestiary import monsters
+
+from _utils import sequence_utils
 
 
 def play_game() -> None:
@@ -20,10 +23,13 @@ def play_game() -> None:
 
     adventurer = Player()
     current_catacomb = Catacomb(adventurer)
+    current_catacomb.room = generate_room()
     welcome()
 
-    input(f"{Fore.WHITE}Press ENTER to continue{Fore.RESET}")
+    input(f"{Fore.MAGENTA}Press ENTER to continue{Fore.RESET}")
     print("")
+
+    current_catacomb.room.print_description()
 
     explore_catacombs(current_catacomb)
 
@@ -60,26 +66,28 @@ def generate_room() -> Room:
 
 def explore_catacombs(current_catacomb: Catacomb) -> None:
     while True:
-        room = generate_room()
+        for item in current_catacomb.room.items:
+            print(f"{Fore.YELLOW}You see a {item['name']}{Fore.RESET}.")
 
-        current_catacomb.set_current_room(room)
-        current_catacomb.get_current_room().print_description()
-
-        for item in current_catacomb.get_current_room().items:
-            print(f"{Fore.MAGENTA}You see a {item['name']}{Fore.RESET}.")
-
-        if current_catacomb.get_current_room().monster:
-            print(
-                f"{Fore.RED}There is a {current_catacomb.get_current_room().monster['name']}!"
-            )
+        if current_catacomb.room.monster:
+            print(f"{Fore.RED}There is a {current_catacomb.room.monster['name']}!")
 
         player_input = input(f"{Fore.MAGENTA}-> {Fore.RESET}").lower().strip()
 
         if player_input == "journal":
             show_journal()
+        elif player_input.startswith("get"):
+            if not current_catacomb.room.items:
+                print("There is nothing to pick up.")
+                continue
+            else:
+                get_item(current_catacomb, player_input)
+                continue
+        elif player_input in ["inventory", "inv"]:
+            show_inventory(current_catacomb)
+            continue
         elif player_input in ["n", "s", "e", "w"]:
             print(f"{Fore.WHITE}You move deeper into the catacombs.")
-            continue
         elif player_input == "quit":
             print(
                 f"{Fore.WHITE}Overcome with terror, you flee the catacombs, and are forever branded a coward.{Fore.RESET}"
@@ -91,6 +99,9 @@ def explore_catacombs(current_catacomb: Catacomb) -> None:
                 f"{Fore.WHITE}Are you ok adventurer? If you need help, type 'journal'.{Fore.RESET}"
             )
             continue
+
+        current_catacomb.room = generate_room()
+        current_catacomb.room.print_description()
 
 
 def show_journal() -> None:
@@ -110,6 +121,34 @@ def show_journal() -> None:
     - status - show current player status
     - quit - end the game{Fore.RESET}"""
     )
+
+
+def show_inventory(current_catacomb: Catacomb):
+    print(f"{Fore.WHITE}Your inventory:{Fore.RESET}")
+    for item in current_catacomb.player.inventory:
+        print(f"\t - {item.capitalize()}")
+
+
+def get_item(current_catacomb: Catacomb, player_input: str):
+    if len(current_catacomb.room.items) > 0 and player_input[4:] == "":
+        player_input = f"{player_input} {current_catacomb.room.items[0]['name']}"
+
+    if player_input[4:] not in current_catacomb.player.inventory:
+        item_index = sequence_utils.find_in_list(
+            player_input[4:], "name", current_catacomb.room.items
+        )
+
+        if item_index > -1:
+            current_item = current_catacomb.room.items[item_index]
+            current_catacomb.player.inventory.append(current_item["name"])
+            current_catacomb.room.items.pop(item_index)
+            print(f"{Fore.MAGENTA}You pick up the {current_item['name']}.{Fore.RESET}")
+        else:
+            print(f"{Fore.RED}There is no {player_input[4:]} here!{Fore.RESET}")
+    else:
+        print(
+            f"{Fore.YELLOW}You already have a {player_input[4:]}, and decide to leave this one.{Fore.RESETs}"
+        )
 
 
 def play_again() -> None:

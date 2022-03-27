@@ -4,4 +4,5 @@ class Player:
         self.treasure: int = 0
         self.monsters_killed: int = 0
         self.xp: int = 0
-        self.turns_played: int = 100
+        self.turns_played: int = 0
+        self.inventory: list = []
