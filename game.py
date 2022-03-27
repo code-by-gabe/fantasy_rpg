@@ -1,8 +1,14 @@
+import random
+
 from colorama import Fore, init
 from blessed import Terminal
+
 from _classes.player import Player
 from _classes.room import Room
 from _classes.catacomb import Catacomb
+
+from _text_files.armory import equipment
+from _text_files.bestiary import monsters
 
 
 def play_game() -> None:
@@ -13,14 +19,12 @@ def play_game() -> None:
     init()
 
     adventurer = Player()
-    room = Room()
-
     current_catacomb = Catacomb(adventurer)
-    current_catacomb.set_current_room(room)
-
     welcome()
 
     input(f"{Fore.WHITE}Press ENTER to continue{Fore.RESET}")
+    print("")
+
     explore_catacombs(current_catacomb)
 
 
@@ -31,21 +35,51 @@ def welcome() -> None:
     The village of Innsburg has been terrorised by strange, other-worldly creatures for months now. Unable to endure 
     any longer, the villagers pooled their wealth and hired the most skilled adventurer they could find: you. After
     listening to their tale of woe, you agree to enter the catacombs where most of the creatures seem to originate,
-    and destroy the foul beasts. Armed with a pistol, your journal from the Miskatonic university, and a few flares, 
-    you descend into the catacombs, where only madness awaits...{Fore.RESET}
+    and destroy the foul beasts. Armed with a longsword, your journal, and a bundle of torches, 
+    you descend into the catacombs, where only death awaits.{Fore.RESET}
 
     """
     )
 
 
+def generate_room() -> Room:
+    items = []
+    monster = {}
+
+    # 25% chance of an item.
+    if random.randint(1, 100) < 26:
+        item = random.choice(list(equipment.values()))
+        items.append(item)
+
+    # 25% of a monster
+    if random.randint(1, 100) < 26:
+        monster = random.choice(monsters)
+
+    return Room(items, monster)
+
+
 def explore_catacombs(current_catacomb: Catacomb) -> None:
     while True:
+        room = generate_room()
+
+        current_catacomb.set_current_room(room)
         current_catacomb.get_current_room().print_description()
 
-        player_input = input(f"{Fore.MAGENTA}-> {Fore.RESET}").lower()
+        for item in current_catacomb.get_current_room().items:
+            print(f"{Fore.MAGENTA}You see a {item['name']}{Fore.RESET}.")
+
+        if current_catacomb.get_current_room().monster:
+            print(
+                f"{Fore.RED}There is a {current_catacomb.get_current_room().monster['name']}!"
+            )
+
+        player_input = input(f"{Fore.MAGENTA}-> {Fore.RESET}").lower().strip()
 
         if player_input == "journal":
             show_journal()
+        elif player_input in ["n", "s", "e", "w"]:
+            print(f"{Fore.WHITE}You move deeper into the catacombs.")
+            continue
         elif player_input == "quit":
             print(
                 f"{Fore.WHITE}Overcome with terror, you flee the catacombs, and are forever branded a coward.{Fore.RESET}"
@@ -54,7 +88,7 @@ def explore_catacombs(current_catacomb: Catacomb) -> None:
             play_again()
         else:
             print(
-                f"{Fore.WHITE}Have you been stricken by madness!? If you need help, type 'journal'.{Fore.RESET}"
+                f"{Fore.WHITE}Are you ok adventurer? If you need help, type 'journal'.{Fore.RESET}"
             )
             continue
 

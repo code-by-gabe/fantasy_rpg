@@ -1,11 +1,11 @@
 monsters = [
     {
-        "name": "Orc",
+        "name": "z",
         "min_hp": 10,
         "max_hp": 20,
         "min_damage": 1,
         "max_damage": 6,
-        "armor_modifier": -20
+        "armor_modifier": -20,
     },
     {
         "name": "Goblin",
@@ -13,7 +13,7 @@ monsters = [
         "max_hp": 30,
         "min_damage": 1,
         "max_damage": 10,
-        "armor_modifier": 5
+        "armor_modifier": 5,
     },
     {
         "name": "Troll",
@@ -21,7 +21,7 @@ monsters = [
         "max_hp": 60,
         "min_damage": 5,
         "max_damage": 25,
-        "armor_modifier": 10
+        "armor_modifier": 10,
     },
     {
         "name": "Zombie",
@@ -29,7 +29,7 @@ monsters = [
         "max_hp": 20,
         "min_damage": 1,
         "max_damage": 20,
-        "armor_modifier": -10
+        "armor_modifier": -10,
     },
     {
         "name": "Vampire",
@@ -37,7 +37,7 @@ monsters = [
         "max_hp": 75,
         "min_damage": 10,
         "max_damage": 75,
-        "armor_modifier": 15
+        "armor_modifier": 15,
     },
     {
         "name": "Dragon",
@@ -45,7 +45,7 @@ monsters = [
         "max_hp": 100,
         "min_damage": 10,
         "max_damage": 50,
-        "armor_modifier": 25
+        "armor_modifier": 25,
     },
     {
         "name": "Ghoul",
@@ -53,7 +53,7 @@ monsters = [
         "max_hp": 60,
         "min_damage": 5,
         "max_damage": 30,
-        "armor_modifier": 20
+        "armor_modifier": 20,
     },
     {
         "name": "Kobold",
@@ -61,7 +61,7 @@ monsters = [
         "max_hp": 40,
         "min_damage": 5,
         "max_damage": 20,
-        "armor_modifier": 15
+        "armor_modifier": 15,
     },
     {
         "name": "Werewolf",
@@ -69,7 +69,7 @@ monsters = [
         "max_hp": 90,
         "min_damage": 10,
         "max_damage": 50,
-        "armor_modifier": 10
+        "armor_modifier": 10,
     },
     {
         "name": "Giant",
@@ -77,7 +77,7 @@ monsters = [
         "max_hp": 100,
         "min_damage": 20,
         "max_damage": 60,
-        "armor_modifier": 25
+        "armor_modifier": 25,
     },
     {
         "name": "Wraith",
@@ -85,6 +85,6 @@ monsters = [
         "max_hp": 70,
         "min_damage": 15,
         "max_damage": 30,
-        "armor_modifier": 40
+        "armor_modifier": 40,
     },
 ]

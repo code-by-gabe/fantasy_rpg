@@ -1,5 +1,5 @@
 # items is a dictionary of all possible items in the game
-items = {
+equipment = {
     "longsword": {
         "name": "longsword",
         "min_damage": 5,
